@@ -20,7 +20,7 @@ class Block: ObservableObject {
 }
 
 struct BlockView: View {
-    private var block: Block
+    @ObservedObject private var block: Block
     
     init(block: Block) {
         self.block = block
