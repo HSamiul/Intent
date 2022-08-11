@@ -1,5 +1,5 @@
 //
-//  EditBlockView.swift
+//  NewBlockSheet.swift
 //  Intent
 //
 //  Created by Samiul Hoque on 8/11/22.
@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-struct EditBlockSheet: View {
-    @ObservedObject private var oldBlock: Block
+struct NewBlockSheet: View {
+    @ObservedObject private var day: Day
     @StateObject private var newBlock: Block
-    @Binding private var isOpen: Bool
     
-    init(oldBlock: Block, isOpen: Binding<Bool>) {
-        self.oldBlock = oldBlock
-        self._newBlock = StateObject(wrappedValue: Block(name: oldBlock.name, time: oldBlock.time))
-        self._isOpen = isOpen
+    init(day: Day) {
+        self.day = day
+        self._newBlock = StateObject(wrappedValue: Block(name: "", time: Date.now))
     }
     
     var body: some View {
@@ -27,9 +25,8 @@ struct EditBlockSheet: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        self.oldBlock.name = self.newBlock.name
-                        self.oldBlock.time = self.newBlock.time
-                        self.isOpen = false
+                        self.day.blocks.append(newBlock)
+                        self.day.newBlockSheetVisible = false
                     } label: {
                         Text("Done")
                             .font(.system(.body, design: .rounded, weight: .semibold))
@@ -39,7 +36,7 @@ struct EditBlockSheet: View {
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        self.isOpen = false
+                        self.day.newBlockSheetVisible = false
                     } label: {
                         Text("Cancel")
                             .font(.system(.body, design: .rounded))
@@ -51,10 +48,10 @@ struct EditBlockSheet: View {
     }
 }
 
-struct EditBlockSheet_Previews: PreviewProvider {
-    static var oldBlock = Block(name: "Make breakfast", time: Date.now)
-    
+struct NewBlockSheet_Previews: PreviewProvider {
+    static var blocks = [Mock.block1, Mock.block2, Mock.block3]
+    static var day = Day(blocks: blocks)
     static var previews: some View {
-        EditBlockSheet(oldBlock: oldBlock, isOpen: .constant(true))
+        NewBlockSheet(day: day)
     }
 }

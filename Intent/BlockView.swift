@@ -9,13 +9,16 @@ import SwiftUI
 
 // TODO: Require that name is not an empty string
 
-class Block: ObservableObject {
+class Block: ObservableObject, Identifiable {
     @Published var name: String
     @Published var time: Date
+    @Published var editBlockSheetVisible: Bool
+    let id = UUID()
     
     init(name: String = "", time: Date = Date.now) {
         self.name = name
         self.time = time
+        self.editBlockSheetVisible = false
     }
 }
 
@@ -38,12 +41,17 @@ struct BlockView: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            CircleButton(systemName: "plus")
-                .padding()
+            CircleButton(systemName: "pencil") {
+                self.block.editBlockSheetVisible = true
+            }
+            .padding()
         }
         .background(.regularMaterial)
         .cornerRadius(10)
 //        .shadow(radius: 5)
+        .sheet(isPresented: self.$block.editBlockSheetVisible) {
+            EditBlockSheet(oldBlock: self.block)
+        }
     }
 }
 

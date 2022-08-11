@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		4223926B28A4B58400AB1A0A /* ButtonViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223926A28A4B58400AB1A0A /* ButtonViews.swift */; };
 		4223926D28A4B9A200AB1A0A /* Miscellaneous.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223926C28A4B9A200AB1A0A /* Miscellaneous.swift */; };
-		4223926F28A4BAD500AB1A0A /* EditBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223926E28A4BAD500AB1A0A /* EditBlockView.swift */; };
+		4223926F28A4BAD500AB1A0A /* EditBlockSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223926E28A4BAD500AB1A0A /* EditBlockSheet.swift */; };
+		4223927128A4C01400AB1A0A /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223927028A4C01400AB1A0A /* DayView.swift */; };
+		4223927328A4C26200AB1A0A /* NewBlockSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223927228A4C26200AB1A0A /* NewBlockSheet.swift */; };
 		427AAE0F28A4B1EF00F8A8F1 /* IntentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE0E28A4B1EF00F8A8F1 /* IntentApp.swift */; };
 		427AAE1128A4B1EF00F8A8F1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE1028A4B1EF00F8A8F1 /* ContentView.swift */; };
 		427AAE1328A4B1F000F8A8F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 427AAE1228A4B1F000F8A8F1 /* Assets.xcassets */; };
@@ -40,7 +42,9 @@
 /* Begin PBXFileReference section */
 		4223926A28A4B58400AB1A0A /* ButtonViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViews.swift; sourceTree = "<group>"; };
 		4223926C28A4B9A200AB1A0A /* Miscellaneous.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Miscellaneous.swift; sourceTree = "<group>"; };
-		4223926E28A4BAD500AB1A0A /* EditBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockView.swift; sourceTree = "<group>"; };
+		4223926E28A4BAD500AB1A0A /* EditBlockSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockSheet.swift; sourceTree = "<group>"; };
+		4223927028A4C01400AB1A0A /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
+		4223927228A4C26200AB1A0A /* NewBlockSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBlockSheet.swift; sourceTree = "<group>"; };
 		427AAE0B28A4B1EF00F8A8F1 /* Intent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		427AAE0E28A4B1EF00F8A8F1 /* IntentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentApp.swift; sourceTree = "<group>"; };
 		427AAE1028A4B1EF00F8A8F1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,9 +109,11 @@
 			children = (
 				427AAE0E28A4B1EF00F8A8F1 /* IntentApp.swift */,
 				427AAE1028A4B1EF00F8A8F1 /* ContentView.swift */,
+				4223927028A4C01400AB1A0A /* DayView.swift */,
 				4223926C28A4B9A200AB1A0A /* Miscellaneous.swift */,
 				427AAE3928A4B27600F8A8F1 /* BlockView.swift */,
-				4223926E28A4BAD500AB1A0A /* EditBlockView.swift */,
+				4223927228A4C26200AB1A0A /* NewBlockSheet.swift */,
+				4223926E28A4BAD500AB1A0A /* EditBlockSheet.swift */,
 				4223926A28A4B58400AB1A0A /* ButtonViews.swift */,
 				427AAE1228A4B1F000F8A8F1 /* Assets.xcassets */,
 				427AAE1428A4B1F000F8A8F1 /* Intent.entitlements */,
@@ -271,11 +277,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4223927128A4C01400AB1A0A /* DayView.swift in Sources */,
 				427AAE3A28A4B27600F8A8F1 /* BlockView.swift in Sources */,
 				4223926D28A4B9A200AB1A0A /* Miscellaneous.swift in Sources */,
 				427AAE1128A4B1EF00F8A8F1 /* ContentView.swift in Sources */,
+				4223927328A4C26200AB1A0A /* NewBlockSheet.swift in Sources */,
 				4223926B28A4B58400AB1A0A /* ButtonViews.swift in Sources */,
-				4223926F28A4BAD500AB1A0A /* EditBlockView.swift in Sources */,
+				4223926F28A4BAD500AB1A0A /* EditBlockSheet.swift in Sources */,
 				427AAE0F28A4B1EF00F8A8F1 /* IntentApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
