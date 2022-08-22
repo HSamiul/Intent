@@ -44,7 +44,7 @@ struct DayView: View {
 }
 
 struct DayView_Previews: PreviewProvider {
-    static var blocks = [Mock.block1, Mock.block2, Mock.block3]
+    static var blocks = [Mock.block1, Mock.block2, Mock.block3, Mock.block4]
     static var day = Day(blocks: blocks, date: Date.now)
     
     static var previews: some View {

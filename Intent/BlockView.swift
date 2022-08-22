@@ -41,12 +41,15 @@ struct BlockView: View {
                 Text(block.name)
                     .font(.system(.headline))
                 
-                VStack(alignment: .leading) {
-                    ForEach($block.bullets) { $bullet in
-                        BulletView(bullet: bullet)
+                if (!block.bullets.isEmpty) {
+                    Divider()
+                    VStack(alignment: .leading) {
+                        ForEach($block.bullets) { $bullet in
+                            BulletView(bullet: bullet)
+                                
+                        }
                     }
                 }
-                .padding(.top, 1)
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)

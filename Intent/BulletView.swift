@@ -11,7 +11,7 @@ class Bullet: ObservableObject, Identifiable {
     @Published var text: String
     let id = UUID()
     
-    init(text: String) {
+    init(text: String = "") {
         self.text = text
     }
 }
