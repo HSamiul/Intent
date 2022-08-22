@@ -12,6 +12,7 @@
 		4223926F28A4BAD500AB1A0A /* EditBlockSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223926E28A4BAD500AB1A0A /* EditBlockSheet.swift */; };
 		4223927128A4C01400AB1A0A /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223927028A4C01400AB1A0A /* DayView.swift */; };
 		4223927328A4C26200AB1A0A /* NewBlockSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223927228A4C26200AB1A0A /* NewBlockSheet.swift */; };
+		4223927528A4C9BA00AB1A0A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223927428A4C9BA00AB1A0A /* HomeView.swift */; };
 		427AAE0F28A4B1EF00F8A8F1 /* IntentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE0E28A4B1EF00F8A8F1 /* IntentApp.swift */; };
 		427AAE1128A4B1EF00F8A8F1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE1028A4B1EF00F8A8F1 /* ContentView.swift */; };
 		427AAE1328A4B1F000F8A8F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 427AAE1228A4B1F000F8A8F1 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		427AAE2B28A4B1F000F8A8F1 /* IntentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE2A28A4B1F000F8A8F1 /* IntentUITests.swift */; };
 		427AAE2D28A4B1F000F8A8F1 /* IntentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE2C28A4B1F000F8A8F1 /* IntentUITestsLaunchTests.swift */; };
 		427AAE3A28A4B27600F8A8F1 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427AAE3928A4B27600F8A8F1 /* BlockView.swift */; };
+		428D154028B3039D00B54AF0 /* BulletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428D153F28B3039D00B54AF0 /* BulletView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,7 @@
 		4223926E28A4BAD500AB1A0A /* EditBlockSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBlockSheet.swift; sourceTree = "<group>"; };
 		4223927028A4C01400AB1A0A /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		4223927228A4C26200AB1A0A /* NewBlockSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBlockSheet.swift; sourceTree = "<group>"; };
+		4223927428A4C9BA00AB1A0A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		427AAE0B28A4B1EF00F8A8F1 /* Intent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		427AAE0E28A4B1EF00F8A8F1 /* IntentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentApp.swift; sourceTree = "<group>"; };
 		427AAE1028A4B1EF00F8A8F1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +60,7 @@
 		427AAE2A28A4B1F000F8A8F1 /* IntentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentUITests.swift; sourceTree = "<group>"; };
 		427AAE2C28A4B1F000F8A8F1 /* IntentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		427AAE3928A4B27600F8A8F1 /* BlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
+		428D153F28B3039D00B54AF0 /* BulletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +114,10 @@
 				427AAE0E28A4B1EF00F8A8F1 /* IntentApp.swift */,
 				427AAE1028A4B1EF00F8A8F1 /* ContentView.swift */,
 				4223927028A4C01400AB1A0A /* DayView.swift */,
+				4223927428A4C9BA00AB1A0A /* HomeView.swift */,
 				4223926C28A4B9A200AB1A0A /* Miscellaneous.swift */,
 				427AAE3928A4B27600F8A8F1 /* BlockView.swift */,
+				428D153F28B3039D00B54AF0 /* BulletView.swift */,
 				4223927228A4C26200AB1A0A /* NewBlockSheet.swift */,
 				4223926E28A4BAD500AB1A0A /* EditBlockSheet.swift */,
 				4223926A28A4B58400AB1A0A /* ButtonViews.swift */,
@@ -280,10 +286,12 @@
 				4223927128A4C01400AB1A0A /* DayView.swift in Sources */,
 				427AAE3A28A4B27600F8A8F1 /* BlockView.swift in Sources */,
 				4223926D28A4B9A200AB1A0A /* Miscellaneous.swift in Sources */,
+				4223927528A4C9BA00AB1A0A /* HomeView.swift in Sources */,
 				427AAE1128A4B1EF00F8A8F1 /* ContentView.swift in Sources */,
 				4223927328A4C26200AB1A0A /* NewBlockSheet.swift in Sources */,
 				4223926B28A4B58400AB1A0A /* ButtonViews.swift in Sources */,
 				4223926F28A4BAD500AB1A0A /* EditBlockSheet.swift in Sources */,
+				428D154028B3039D00B54AF0 /* BulletView.swift in Sources */,
 				427AAE0F28A4B1EF00F8A8F1 /* IntentApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

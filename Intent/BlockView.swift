@@ -12,6 +12,8 @@ import SwiftUI
 class Block: ObservableObject, Identifiable {
     @Published var name: String
     @Published var time: Date
+//    @Published var bulletPoints: [Bullet]
+    
     @Published var editBlockSheetVisible: Bool
     let id = UUID()
     
@@ -34,9 +36,9 @@ struct BlockView: View {
             VStack(alignment: .leading) {
                 Text(block.time.formatted())
                     .foregroundColor(.gray)
-                    .font(.system(.caption, design: Constants.fontDesign)).bold()
+                    .font(.system(.caption)).bold()
                 Text(block.name)
-                    .font(.system(.headline, design: Constants.fontDesign))
+                    .font(.system(.headline))
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)

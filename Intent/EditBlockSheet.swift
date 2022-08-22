@@ -19,9 +19,12 @@ struct EditBlockSheet: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Block name", text: self.$newBlock.name)
-                DatePicker("Block time", selection: self.$newBlock.time)
+                Section("Details") {
+                    TextField("Block name", text: self.$newBlock.name)
+                    DatePicker("Block time", selection: self.$newBlock.time)
+                }
             }
+            .navigationTitle("Edit Block")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

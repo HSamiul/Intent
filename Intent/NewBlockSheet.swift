@@ -19,9 +19,19 @@ struct NewBlockSheet: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Block name", text: self.$newBlock.name)
-                DatePicker("Block time", selection: self.$newBlock.time)
+                Section("Details") {
+                    TextField("Block name", text: self.$newBlock.name)
+                    DatePicker("Block time", selection: self.$newBlock.time)
+                }
+                
+                Section("Additional Details") {
+                    
+                    Button("Add bullet point") {
+                        
+                    }
+                }
             }
+            .navigationTitle("New Block")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

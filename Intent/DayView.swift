@@ -10,10 +10,12 @@ import SwiftUI
 class Day: ObservableObject {
     @Published var blocks: [Block]
     @Published var newBlockSheetVisible: Bool
+    let date: Date
     
-    init(blocks: [Block]) {
+    init(blocks: [Block], date: Date = Date.now) {
         self.blocks = blocks
         self.newBlockSheetVisible = false
+        self.date = date
     }
 }
 
@@ -43,7 +45,7 @@ struct DayView: View {
 
 struct DayView_Previews: PreviewProvider {
     static var blocks = [Mock.block1, Mock.block2, Mock.block3]
-    static var day = Day(blocks: blocks)
+    static var day = Day(blocks: blocks, date: Date.now)
     
     static var previews: some View {
         DayView(day: day)
