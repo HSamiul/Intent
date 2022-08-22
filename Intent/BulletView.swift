@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-class Bullet: ObservableObject {
+class Bullet: ObservableObject, Identifiable {
     @Published var text: String
+    let id = UUID()
     
     init(text: String) {
         self.text = text
@@ -23,7 +24,7 @@ struct BulletView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             Text("•")
                 .foregroundColor(.accentColor)
             Text(bullet.text)
@@ -32,7 +33,7 @@ struct BulletView: View {
 }
 
 struct BulletView_Previews: PreviewProvider {
-    static var bullet = Bullet(text: "A really important detail")
+    static var bullet = Bullet(text: "A really important detail containing critical information in this bullet point")
     static var previews: some View {
         BulletView(bullet: bullet)
     }

@@ -12,14 +12,15 @@ import SwiftUI
 class Block: ObservableObject, Identifiable {
     @Published var name: String
     @Published var time: Date
-//    @Published var bulletPoints: [Bullet]
-    
+    @Published var bullets: [Bullet]
     @Published var editBlockSheetVisible: Bool
+    
     let id = UUID()
     
-    init(name: String = "", time: Date = Date.now) {
+    init(name: String = "", time: Date = Date.now, bullets: [Bullet] = []) {
         self.name = name
         self.time = time
+        self.bullets = bullets
         self.editBlockSheetVisible = false
     }
 }
@@ -39,6 +40,13 @@ struct BlockView: View {
                     .font(.system(.caption)).bold()
                 Text(block.name)
                     .font(.system(.headline))
+                
+                VStack(alignment: .leading) {
+                    ForEach($block.bullets) { $bullet in
+                        BulletView(bullet: bullet)
+                    }
+                }
+                .padding(.top, 1)
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -58,8 +66,11 @@ struct BlockView: View {
 }
 
 struct BlockView_Previews: PreviewProvider {
+    static var bullets = [Mock.bullet1, Mock.bullet2, Mock.bullet3]
+    static var block = Block(name: "Birthday Party", time: Date.now, bullets: bullets)
+    
     static var previews: some View {
-        BlockView(block: Block(name: "Birthday Party", time: Date.now))
+        BlockView(block: block)
             .padding()
     }
 }
