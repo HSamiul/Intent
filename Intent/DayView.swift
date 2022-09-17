@@ -36,6 +36,11 @@ struct DayView: View {
                 self.day.newBlockSheetVisible = true
             }
             .padding()
+          
+          if self.day.blocks.isEmpty {
+            Text("No blocks yet")
+              .foregroundColor(.gray)
+          }
         }
         .sheet(isPresented: $day.newBlockSheetVisible) {
             NewBlockSheet(day: day)

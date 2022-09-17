@@ -13,7 +13,7 @@ struct EditBlockSheet: View {
     
     init(oldBlock: Block) {
         self.oldBlock = oldBlock
-        self._newBlock = StateObject(wrappedValue: Block(name: oldBlock.name, time: oldBlock.time))
+        self._newBlock = StateObject(wrappedValue: Block(name: oldBlock.name, time: oldBlock.time, bullets: oldBlock.bullets))
     }
     
     var body: some View {
@@ -23,6 +23,16 @@ struct EditBlockSheet: View {
                     TextField("Block name", text: self.$newBlock.name)
                     DatePicker("Block time", selection: self.$newBlock.time)
                 }
+                
+                Section("Additional Details") {
+                    ForEach(self.$newBlock.bullets) { $bullet in
+                        TextField("Bullet point", text: $bullet.text)
+                    }
+                    
+                    Button("Add bullet point") {
+                        self.newBlock.bullets.append(Bullet())
+                    }
+                }
             }
             .navigationTitle("Edit Block")
             .toolbar {
@@ -30,6 +40,9 @@ struct EditBlockSheet: View {
                     Button {
                         self.oldBlock.name = self.newBlock.name
                         self.oldBlock.time = self.newBlock.time
+                        self.oldBlock.bullets = self.newBlock.bullets.filter { bullet in
+                            !bullet.text.isEmpty
+                        }
                         self.oldBlock.editBlockSheetVisible = false
                     } label: {
                         Text("Done")
@@ -53,9 +66,7 @@ struct EditBlockSheet: View {
 }
 
 struct EditBlockSheet_Previews: PreviewProvider {
-    static var oldBlock = Block(name: "Make breakfast", time: Date.now)
-    
     static var previews: some View {
-        EditBlockSheet(oldBlock: oldBlock)
+        EditBlockSheet(oldBlock: Mock.block4)
     }
 }
