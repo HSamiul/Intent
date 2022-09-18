@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct EditBlockSheet: View {
+    @ObservedObject private var day: Day
     @ObservedObject private var oldBlock: Block
     @StateObject private var newBlock: Block
     
-    init(oldBlock: Block) {
+    init(day: Day, oldBlock: Block) {
+        self.day = day
         self.oldBlock = oldBlock
         self._newBlock = StateObject(wrappedValue: Block(name: oldBlock.name, time: oldBlock.time, bullets: oldBlock.bullets))
     }
@@ -33,7 +35,17 @@ struct EditBlockSheet: View {
                         self.newBlock.bullets.append(Bullet())
                     }
                 }
+                
+                Button("Delete") {
+                    self.day.blocks = self.day.blocks.filter { block in
+                        self.oldBlock.id != block.id
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .foregroundColor(.red)
+
             }
+            .scrollContentBackground(.visible)
             .navigationTitle("Edit Block")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -66,7 +78,9 @@ struct EditBlockSheet: View {
 }
 
 struct EditBlockSheet_Previews: PreviewProvider {
+    static var day = Day(blocks: [])
+    
     static var previews: some View {
-        EditBlockSheet(oldBlock: Mock.block4)
+        EditBlockSheet(day: day, oldBlock: Mock.block4)
     }
 }

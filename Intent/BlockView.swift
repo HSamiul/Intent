@@ -25,7 +25,25 @@ class Block: ObservableObject, Identifiable {
     }
 }
 
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
+
+struct RoundedCorner: Shape {
+
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
 struct BlockView: View {
+    @EnvironmentObject var day: Day
     @ObservedObject private var block: Block
     
     init(block: Block) {
@@ -40,13 +58,13 @@ struct BlockView: View {
                     .font(.system(.caption)).bold()
                 Text(block.name)
                     .font(.system(.headline))
+                    .padding(.top, 1)
                 
                 if (!block.bullets.isEmpty) {
                     Divider()
                     VStack(alignment: .leading) {
                         ForEach($block.bullets) { $bullet in
                             BulletView(bullet: bullet)
-                                
                         }
                     }
                 }
@@ -63,7 +81,7 @@ struct BlockView: View {
         .cornerRadius(10)
 //        .shadow(radius: 5)
         .sheet(isPresented: self.$block.editBlockSheetVisible) {
-            EditBlockSheet(oldBlock: self.block)
+            EditBlockSheet(day: self.day, oldBlock: self.block)
         }
     }
 }
