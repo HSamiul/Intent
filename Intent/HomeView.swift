@@ -19,7 +19,8 @@ class Home: ObservableObject {
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        DayView(day: Day(blocks: []))
+            .navigationTitle("Today")
     }
 }
 

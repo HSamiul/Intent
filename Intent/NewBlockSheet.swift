@@ -7,9 +7,21 @@
 
 import SwiftUI
 
+extension String {
+    var isBlank: Bool {
+        for char in self {
+            if !char.isWhitespace {
+                return false
+            }
+        }
+        return true
+    }
+}
+
 struct NewBlockSheet: View {
     @ObservedObject private var day: Day
     @StateObject private var newBlock: Block
+    @State private var showingAlert = false
     
     init(day: Day) {
         self.day = day
@@ -38,6 +50,12 @@ struct NewBlockSheet: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        if (self.newBlock.name.isBlank) {
+                            self.showingAlert = true
+                            return
+                        }
+                        self.newBlock.name = self.newBlock.name.trimmingCharacters(in: .whitespacesAndNewlines)
+                        
                         self.newBlock.bullets = self.newBlock.bullets.filter { bullet in
                             !bullet.text.isEmpty
                         }
@@ -47,6 +65,7 @@ struct NewBlockSheet: View {
                         Text("Done")
                             .font(.system(.body, design: .rounded, weight: .semibold))
                     }
+                    .alert("You must enter a name for the block.", isPresented: self.$showingAlert) {}
 
                 }
                 

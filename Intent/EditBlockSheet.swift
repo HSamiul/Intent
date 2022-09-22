@@ -11,6 +11,7 @@ struct EditBlockSheet: View {
     @ObservedObject private var day: Day
     @ObservedObject private var oldBlock: Block
     @StateObject private var newBlock: Block
+    @State private var showingAlert = false
     
     init(day: Day, oldBlock: Block) {
         self.day = day
@@ -50,6 +51,13 @@ struct EditBlockSheet: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        if (self.newBlock.name.isBlank) {
+                            self.showingAlert = true
+                            return
+                        }
+                        self.newBlock.name = self.newBlock.name.trimmingCharacters(in: .whitespacesAndNewlines)
+                        
+                        self.newBlock.name = self.newBlock.name.trimmingCharacters(in: .whitespacesAndNewlines)
                         self.oldBlock.name = self.newBlock.name
                         self.oldBlock.time = self.newBlock.time
                         self.oldBlock.bullets = self.newBlock.bullets.filter { bullet in
@@ -60,6 +68,7 @@ struct EditBlockSheet: View {
                         Text("Done")
                             .font(.system(.body, design: .rounded, weight: .semibold))
                     }
+                    .alert("You must enter a name for the block.", isPresented: self.$showingAlert) {}
 
                 }
                 
