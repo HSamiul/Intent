@@ -46,6 +46,8 @@ struct DayView: View {
             }
         }
         .environmentObject(self.day) // supply day to blocks
+//        .navigationTitle(self.day.date.formatted(.dateTime.weekday(.wide)))
+        .navigationTitle(self.day.date.formatted(.dateTime.month().day().year()))
         .sheet(isPresented: $day.newBlockSheetVisible) {
             NewBlockSheet(day: day)
         }
@@ -53,8 +55,8 @@ struct DayView: View {
 }
 
 struct DayView_Previews: PreviewProvider {
-//    static var blocks = [Mock.block2, Mock.block4, Mock.block1, Mock.block3]
-    static var blocks = [Block]()
+    static var blocks = [Mock.block2, Mock.block4, Mock.block1, Mock.block3]
+//    static var blocks = [Block]()
     static var day = Day(blocks: blocks, date: Date.now)
     
     static var previews: some View {

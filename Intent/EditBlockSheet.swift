@@ -79,7 +79,6 @@ struct EditBlockSheet: View {
                         Text("Cancel")
                             .font(.system(.body, design: .rounded))
                     }
-
                 }
             }
         }
