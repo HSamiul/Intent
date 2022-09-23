@@ -12,19 +12,24 @@ class Home: ObservableObject {
     @Published var selectedDate: Date
     @Published var chooseDaySheetVisible = false
     
-    init(days: [Day] = [], selectedDate: Date = Date.now) {
+    init(days: [Day] = [Day(blocks: [], date: Date(/*create a date with time 0:00*/))], selectedDate: Date = Date.now) {
         self.days = days
         self.selectedDate = selectedDate
     }
+    
+    func getDayFrom(date: Date) {
+            
+    }
 }
 
-
 struct HomeView: View {
-    @ObservedObject private var home = Home()
+    @StateObject private var home = Home()
     
     var body: some View {
         NavigationView {
-            DayView(day: Day(blocks: [Mock.block1, Mock.block2]))
+            DayView(day: self.home.days.first(where: { day in
+                Calendar.current.isDate(day.date, equalTo: self.home.selectedDate, toGranularity: .day)
+            })!)
                 .padding(.vertical)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -45,9 +50,7 @@ struct HomeView: View {
                 }
         }
         .sheet(isPresented: self.$home.chooseDaySheetVisible) {
-            DatePicker("Test", selection: self.$home.selectedDate, displayedComponents: .date)
-                .datePickerStyle(.graphical)
-                .padding()
+            ChooseDateSheet(home: self.home)
                 .presentationDetents([.fraction(0.50)])
         }
     }

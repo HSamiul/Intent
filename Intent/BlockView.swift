@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-// TODO: Require that name is not an empty string
-
 class Block: ObservableObject, Identifiable {
     @Published var name: String
     @Published var time: Date
