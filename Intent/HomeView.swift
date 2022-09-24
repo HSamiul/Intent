@@ -12,7 +12,7 @@ class Home: ObservableObject {
     @Published var selectedDate: Date
     @Published var chooseDaySheetVisible = false
     
-    init(days: [Day] = [Day(blocks: [], date: Date(/*create a date with time 0:00*/))], selectedDate: Date = Date.now) {
+    init(days: [Day] = [Day(blocks: [:], date: Date())], selectedDate: Date = Date.now) {
         self.days = days
         self.selectedDate = selectedDate
     }

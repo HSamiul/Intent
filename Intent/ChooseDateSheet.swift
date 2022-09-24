@@ -29,17 +29,18 @@ struct ChooseDateSheet: View {
                             Calendar.current.isDate(day.date, equalTo: self.date, toGranularity: .day)
                         })) {
                             print("I happened")
-                            self.home.days.append(Day(blocks: [], date: self.date))
+                            self.home.days.append(Day(blocks: [:], date: self.date))
                             
                         }
                         print("bruddah")
                         self.home.selectedDate = self.date
                         self.home.chooseDaySheetVisible = false
                     } label: {
-                        Text("Done")
+                        Text("Close")
                             .fontWeight(.semibold)
                     }
                 }
+                .padding(.horizontal)
         }
     }
 }

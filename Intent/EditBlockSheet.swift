@@ -28,19 +28,17 @@ struct EditBlockSheet: View {
                 }
                 
                 Section("Additional Details") {
-                    ForEach(self.$newBlock.bullets) { $bullet in
-                        TextField("Bullet point", text: $bullet.text)
+                    ForEach(self.$newBlock.bullets) { bullet in
+                        TextField("Bullet point", text: bullet.text)
                     }
                     
                     Button("Add bullet point") {
-                        self.newBlock.bullets.append(Bullet())
+                        self.newBlock.bullets.append(Bullet(""))
                     }
                 }
                 
                 Button("Delete") {
-                    self.day.blocks = self.day.blocks.filter { block in
-                        self.oldBlock.id != block.id
-                    }
+                    self.day.blocks.removeValue(forKey: self.oldBlock.id)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.red)
@@ -86,7 +84,7 @@ struct EditBlockSheet: View {
 }
 
 struct EditBlockSheet_Previews: PreviewProvider {
-    static var day = Day(blocks: [])
+    static var day = Day(blocks: [:], date: Date.now)
     
     static var previews: some View {
         EditBlockSheet(day: day, oldBlock: Mock.block4)

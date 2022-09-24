@@ -8,17 +8,27 @@
 import SwiftUI
 
 class Day: ObservableObject {
-    @Published var blocks: [Block]
+    @Published var blocks: Dictionary<UUID, Block>
     @Published var newBlockSheetVisible: Bool
     let date: Date
     
-    init(blocks: [Block], date: Date = Date.now) {
+    init(blocks: Dictionary<UUID, Block>, date: Date) {
         self.blocks = blocks
         self.newBlockSheetVisible = false
         self.date = date
     }
+    
+    func getSortedBlocks() -> [Block] {
+        let pairs = self.blocks.sorted { pair1, pair2 in
+            pair1.value.time < pair2.value.time
+        }
+        let blocks = pairs.map { pair in
+            return pair.value
+        }
+        return blocks
+    }
 }
-
+    
 struct DayView: View {
     @ObservedObject private var day: Day
     
@@ -29,7 +39,7 @@ struct DayView: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(self.day.blocks.sorted { block1, block2 in block1.time < block2.time}) { block in
+                ForEach(self.day.getSortedBlocks()) { block in
                     BlockView(block: block)
                 }
                 .padding(.horizontal)
@@ -38,7 +48,7 @@ struct DayView: View {
                     self.day.newBlockSheetVisible = true
                 }
                 .padding()
-              
+                
                 if self.day.blocks.isEmpty {
                     Text("No blocks set for today.")
                         .foregroundColor(.gray)
@@ -46,17 +56,19 @@ struct DayView: View {
             }
         }
         .environmentObject(self.day) // supply day to blocks
-//        .navigationTitle(self.day.date.formatted(.dateTime.weekday(.wide)))
+        //        .navigationTitle(self.day.date.formatted(.dateTime.weekday(.wide)))
         .navigationTitle(self.day.date.formatted(.dateTime.month().day().year()))
         .sheet(isPresented: $day.newBlockSheetVisible) {
             NewBlockSheet(day: day)
         }
     }
 }
-
+    
 struct DayView_Previews: PreviewProvider {
-    static var blocks = [Mock.block2, Mock.block4, Mock.block1, Mock.block3]
-//    static var blocks = [Block]()
+    static var blocks = [
+        Mock.block2.id:Mock.block2, Mock.block4.id:Mock.block4,
+        Mock.block1.id:Mock.block1, Mock.block3.id:Mock.block3
+    ]
     static var day = Day(blocks: blocks, date: Date.now)
     
     static var previews: some View {

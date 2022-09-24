@@ -11,7 +11,7 @@ class Bullet: ObservableObject, Identifiable {
     @Published var text: String
     let id = UUID()
     
-    init(text: String = "") {
+    init(_ text: String) {
         self.text = text
     }
 }
@@ -33,7 +33,7 @@ struct BulletView: View {
 }
 
 struct BulletView_Previews: PreviewProvider {
-    static var bullet = Bullet(text: "A really important detail containing critical information in this bullet point")
+    static var bullet = Bullet("A really important detail containing critical information in this bullet point")
     static var previews: some View {
         BulletView(bullet: bullet)
     }

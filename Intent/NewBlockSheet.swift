@@ -42,7 +42,7 @@ struct NewBlockSheet: View {
                     }
                     
                     Button("Add bullet point") {
-                        self.newBlock.bullets.append(Bullet())
+                        self.newBlock.bullets.append(Bullet(""))
                     }
                 }
             }
@@ -59,7 +59,7 @@ struct NewBlockSheet: View {
                         self.newBlock.bullets = self.newBlock.bullets.filter { bullet in
                             !bullet.text.isEmpty
                         }
-                        self.day.blocks.append(newBlock)
+                        self.day.blocks[newBlock.id] = newBlock
                         self.day.newBlockSheetVisible = false
                     } label: {
                         Text("Done")
@@ -85,7 +85,7 @@ struct NewBlockSheet: View {
 
 struct NewBlockSheet_Previews: PreviewProvider {
     static var blocks = [Mock.block1, Mock.block2, Mock.block3]
-    static var day = Day(blocks: blocks)
+    static var day = Day(blocks: [:], date: Date.now)
     static var previews: some View {
         NewBlockSheet(day: day)
     }

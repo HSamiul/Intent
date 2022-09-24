@@ -12,9 +12,9 @@ class Constants {
 }
 
 class Mock {
-    static var bullet1 = Bullet(text: "Get candles")
-    static var bullet2 = Bullet(text: "Pick up Jenn")
-    static var bullet3 = Bullet(text: "Check in with Ron")
+    static var bullet1 = Bullet("Get candles")
+    static var bullet2 = Bullet("Pick up Jenn")
+    static var bullet3 = Bullet("Check in with Ron")
     
     static var block1 = Block(name: "John's birthday", time: Date.now)
     static var block2 = Block(name: "Dinner with friends", time: Date.now + 1000)
