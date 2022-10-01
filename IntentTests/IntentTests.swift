@@ -32,7 +32,18 @@ final class IntentTests: XCTestCase {
         XCTAssert(block3.formattedTime() == formatter.string(from: Date.now - 2000))
     }
     
-    func testBulletFiltering() {
+    func testBlockBulletFiltering() {
+        let bullet1 = Bullet("\n")
+        let bullet2 = Bullet("")
+        let bullet3 = Bullet("text")
+        let bullet4 = Bullet("    ")
+        let bullet5 = Bullet("   \n")
+        let bullet6 = Bullet("more text")
         
+        let block = Block(bullets: [bullet6, bullet3, bullet2, bullet1, bullet4, bullet5])
+        block.filterBullets()
+        XCTAssert(block.bullets == [bullet6, bullet3])
     }
+    
+    
 }

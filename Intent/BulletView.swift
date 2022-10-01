@@ -7,12 +7,21 @@
 
 import SwiftUI
 
-class Bullet: ObservableObject, Identifiable {
+class Bullet: ObservableObject, Identifiable, Comparable {
     @Published var text: String
+    let timestamp = Date()
     let id = UUID()
     
     init(_ text: String) {
         self.text = text
+    }
+    
+    static func == (lhs: Bullet, rhs: Bullet) -> Bool {
+        lhs.timestamp == rhs.timestamp
+    }
+    
+    static func < (lhs: Bullet, rhs: Bullet) -> Bool {
+        lhs.timestamp < rhs.timestamp
     }
 }
 

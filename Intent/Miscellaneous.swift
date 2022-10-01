@@ -11,7 +11,6 @@ import SwiftUI
 extension String {
     var isBlank: Bool {
         for char in self {
-            print("char: \(char)")
             if !char.isWhitespace {
                 return false
             }

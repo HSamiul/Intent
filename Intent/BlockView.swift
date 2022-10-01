@@ -22,10 +22,18 @@ class Block: ObservableObject, Identifiable {
         self.editBlockSheetVisible = false
     }
     
+    /* return this block's time as a human-readable string */
     func formattedTime() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
         return formatter.string(from: date)
+    }
+    
+    /* modify this block's bullets to remove any that don't have text */
+    func filterBullets() {
+        bullets = bullets.filter({ bullet in
+            return !bullet.text.isBlank
+        })
     }
 }
 
