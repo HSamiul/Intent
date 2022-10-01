@@ -9,34 +9,23 @@ import SwiftUI
 
 class Block: ObservableObject, Identifiable {
     @Published var name: String
-    @Published var time: Date
+    @Published var date: Date
     @Published var bullets: [Bullet]
     @Published var editBlockSheetVisible: Bool
     
     let id = UUID()
     
-    init(name: String = "", time: Date = Date.now, bullets: [Bullet] = []) {
+    init(name: String = "", date: Date = Date(), bullets: [Bullet] = []) {
         self.name = name
-        self.time = time
         self.bullets = bullets
+        self.date = date
         self.editBlockSheetVisible = false
     }
-}
-
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
-    }
-}
-
-struct RoundedCorner: Shape {
-
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
+    
+    func formattedTime() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter.string(from: date)
     }
 }
 
@@ -51,7 +40,7 @@ struct BlockView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(block.time.formatted())
+                Text(block.formattedTime())
                     .foregroundColor(.gray)
                     .font(.system(.caption)).bold()
                 Text(block.name)
@@ -61,7 +50,7 @@ struct BlockView: View {
                 if (!block.bullets.isEmpty) {
                     Divider()
                     VStack(alignment: .leading) {
-                        ForEach($block.bullets) { $bullet in
+                        ForEach(block.bullets) { bullet in
                             BulletView(bullet: bullet)
                         }
                     }
@@ -86,7 +75,7 @@ struct BlockView: View {
 
 struct BlockView_Previews: PreviewProvider {
     static var bullets = [Mock.bullet1, Mock.bullet2, Mock.bullet3]
-    static var block = Block(name: "Birthday Party", time: Date.now, bullets: bullets)
+    static var block = Block(name: "Birthday Party", date: Date.now, bullets: bullets)
     
     static var previews: some View {
         BlockView(block: block)

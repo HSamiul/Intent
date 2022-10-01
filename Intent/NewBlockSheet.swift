@@ -7,42 +7,33 @@
 
 import SwiftUI
 
-extension String {
-    var isBlank: Bool {
-        for char in self {
-            if !char.isWhitespace {
-                return false
-            }
-        }
-        return true
-    }
-}
-
 struct NewBlockSheet: View {
     @ObservedObject private var day: Day
-    @StateObject private var newBlock: Block
     @State private var showingAlert = false
+    
+    @State private var name: String = ""
+    @State private var time: Date = Date.now
+    @State private var bullets: [Bullet] = []
     
     init(day: Day) {
         self.day = day
-        self._newBlock = StateObject(wrappedValue: Block())
     }
     
     var body: some View {
         NavigationView {
             Form {
                 Section("Details") {
-                    TextField("Block name", text: self.$newBlock.name)
-                    DatePicker("Block time", selection: self.$newBlock.time)
+                    TextField("Block name", text: self.$name)
+                    DatePicker("Block time", selection: self.$time)
                 }
                 
                 Section("Additional Details") {
-                    ForEach(self.$newBlock.bullets) { $bullet in
-                        TextField("Bullet point", text: $bullet.text)
+                    ForEach(self.$bullets) { bullet in
+                        TextField("Bullet point", text: bullet.text)
                     }
                     
                     Button("Add bullet point") {
-                        self.newBlock.bullets.append(Bullet(""))
+                        self.bullets.append(Bullet(""))
                     }
                 }
             }
@@ -50,20 +41,25 @@ struct NewBlockSheet: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if (self.newBlock.name.isBlank) {
+                        if (self.name.isBlank) {
                             self.showingAlert = true
                             return
                         }
-                        self.newBlock.name = self.newBlock.name.trimmingCharacters(in: .whitespacesAndNewlines)
+                        self.name = self.name.trimmingCharacters(in: .whitespacesAndNewlines)
                         
-                        self.newBlock.bullets = self.newBlock.bullets.filter { bullet in
-                            !bullet.text.isEmpty
+                        self.bullets = self.bullets.filter { bullet in
+//                            !bullet.text.isBlank
+//                            !bullet.text.trimmingCharacters(in: .whitespaces).isEmpty
+                            !bullet.text.isBlank
                         }
-                        self.day.blocks[newBlock.id] = newBlock
+                        print("Bullets: \(self.bullets.count)")
+                        self.day.addBlock(name: self.name, time: self.time, bullets: self.bullets)
+//                        self.day.blocks.updateValue(block, forKey: block.id)
+//                        self.day.blocks[block.id] = block
                         self.day.newBlockSheetVisible = false
                     } label: {
                         Text("Done")
-                            .font(.system(.body, design: .rounded, weight: .semibold))
+                            .fontWeight(.semibold)
                     }
                     .alert("You must enter a name for the block.", isPresented: self.$showingAlert) {}
 
@@ -74,7 +70,6 @@ struct NewBlockSheet: View {
                         self.day.newBlockSheetVisible = false
                     } label: {
                         Text("Cancel")
-                            .font(.system(.body, design: .rounded))
                     }
 
                 }

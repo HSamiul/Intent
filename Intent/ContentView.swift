@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    let day = Day(blocks: [:], date: Date.now)
     var body: some View {
-        HomeView()
+//        HomeView()
+        DayView(day: day)
     }
 }
 

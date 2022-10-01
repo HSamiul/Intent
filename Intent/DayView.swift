@@ -18,9 +18,14 @@ class Day: ObservableObject {
         self.date = date
     }
     
+    func addBlock(name: String, time: Date, bullets: [Bullet]) {
+        let block = Block(name: name, date: time, bullets: bullets)
+        self.blocks.updateValue(block, forKey: block.id)
+    }
+    
     func getSortedBlocks() -> [Block] {
         let pairs = self.blocks.sorted { pair1, pair2 in
-            pair1.value.time < pair2.value.time
+            pair1.value.date < pair2.value.date
         }
         let blocks = pairs.map { pair in
             return pair.value
@@ -28,7 +33,7 @@ class Day: ObservableObject {
         return blocks
     }
 }
-    
+
 struct DayView: View {
     @ObservedObject private var day: Day
     
@@ -39,10 +44,10 @@ struct DayView: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(self.day.getSortedBlocks()) { block in
-                    BlockView(block: block)
-                }
-                .padding(.horizontal)
+//                ForEach(self.day.getSortedBlocks()) { block in
+//                    BlockView(block: block)
+//                }
+//                .padding(.horizontal)
                 
                 CircleButton(systemName: "plus") {
                     self.day.newBlockSheetVisible = true
@@ -70,7 +75,7 @@ struct DayView_Previews: PreviewProvider {
         Mock.block1.id:Mock.block1, Mock.block3.id:Mock.block3
     ]
     static var day = Day(blocks: blocks, date: Date.now)
-    
+
     static var previews: some View {
         DayView(day: day)
     }

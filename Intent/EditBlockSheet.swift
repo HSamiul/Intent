@@ -16,7 +16,7 @@ struct EditBlockSheet: View {
     init(day: Day, block: Block) {
         self.day = day
         self.block = block
-        self._transientBlock = StateObject(wrappedValue: Block(name: block.name, time: block.time, bullets: block.bullets))
+        self._transientBlock = StateObject(wrappedValue: Block(name: block.name, date: block.date, bullets: block.bullets))
     }
     
     var body: some View {
@@ -24,7 +24,7 @@ struct EditBlockSheet: View {
             Form {
                 Section("Details") {
                     TextField("Block name", text: self.$transientBlock.name)
-                    DatePicker("Block time", selection: self.$transientBlock.time)
+                    DatePicker("Block time", selection: self.$transientBlock.date)
                 }
                 
                 Section("Additional Details") {
@@ -55,9 +55,9 @@ struct EditBlockSheet: View {
                         self.transientBlock.name = self.transientBlock.name.trimmingCharacters(in: .whitespacesAndNewlines)
                         
                         self.block.name = self.transientBlock.name
-                        self.block.time = self.transientBlock.time
+                        self.block.date = self.transientBlock.date
                         self.block.bullets = self.transientBlock.bullets.filter { bullet in
-                            !bullet.text.isEmpty
+                            !bullet.text.isBlank
                         }
                         self.block.editBlockSheetVisible = false
                     } label: {
