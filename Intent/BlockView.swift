@@ -15,7 +15,7 @@ class Block: ObservableObject, Identifiable {
     
     let id = UUID()
     
-    init(name: String = "", date: Date = Date(), bullets: [Bullet] = []) {
+    init(_ name: String = "", date: Date = Date(), bullets: [Bullet] = []) {
         self.name = name
         self.bullets = bullets
         self.date = date
@@ -34,6 +34,12 @@ class Block: ObservableObject, Identifiable {
         bullets = bullets.filter({ bullet in
             return !bullet.text.isBlank
         })
+    }
+    
+    func update(name: String, date: Date, bullets: [Bullet]) {
+        self.name = name
+        self.date = date
+        self.bullets = bullets
     }
 }
 
@@ -83,7 +89,7 @@ struct BlockView: View {
 
 struct BlockView_Previews: PreviewProvider {
     static var bullets = [Mock.bullet1, Mock.bullet2, Mock.bullet3]
-    static var block = Block(name: "Birthday Party", date: Date.now, bullets: bullets)
+    static var block = Block("Birthday Party", date: Date.now, bullets: bullets)
     
     static var previews: some View {
         BlockView(block: block)

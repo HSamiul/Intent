@@ -12,7 +12,7 @@ struct NewBlockSheet: View {
     @State private var showingAlert = false
     
     @State private var name: String = ""
-    @State private var time: Date = Date.now
+    @State private var date: Date = Date.now
     @State private var bullets: [Bullet] = []
     
     init(day: Day) {
@@ -23,17 +23,17 @@ struct NewBlockSheet: View {
         NavigationView {
             Form {
                 Section("Details") {
-                    TextField("Block name", text: self.$name)
-                    DatePicker("Block time", selection: self.$time)
+                    TextField("Block name", text: $name)
+                    DatePicker("Block time", selection: $date)
                 }
                 
                 Section("Additional Details") {
-                    ForEach(self.$bullets) { bullet in
+                    ForEach($bullets) { bullet in
                         TextField("Bullet point", text: bullet.text)
                     }
                     
                     Button("Add bullet point") {
-                        self.bullets.append(Bullet(""))
+                        bullets.append(Bullet(""))
                     }
                 }
             }
@@ -41,22 +41,14 @@ struct NewBlockSheet: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if (self.name.isBlank) {
-                            self.showingAlert = true
+                        if (name.isBlank) {
+                            showingAlert = true
                             return
                         }
-                        self.name = self.name.trimmingCharacters(in: .whitespacesAndNewlines)
-                        
-                        self.bullets = self.bullets.filter { bullet in
-//                            !bullet.text.isBlank
-//                            !bullet.text.trimmingCharacters(in: .whitespaces).isEmpty
-                            !bullet.text.isBlank
-                        }
-                        print("Bullets: \(self.bullets.count)")
-                        self.day.addBlock(name: self.name, time: self.time, bullets: self.bullets)
-//                        self.day.blocks.updateValue(block, forKey: block.id)
-//                        self.day.blocks[block.id] = block
-                        self.day.newBlockSheetVisible = false
+                        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                        day.addBlock(name: name, date: date, bullets: bullets)
+                        day.newBlockSheetVisible = false
                     } label: {
                         Text("Done")
                             .fontWeight(.semibold)
@@ -81,6 +73,7 @@ struct NewBlockSheet: View {
 struct NewBlockSheet_Previews: PreviewProvider {
     static var blocks = [Mock.block1, Mock.block2, Mock.block3]
     static var day = Day(blocks: [:], date: Date.now)
+    
     static var previews: some View {
         NewBlockSheet(day: day)
     }

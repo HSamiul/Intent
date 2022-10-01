@@ -21,15 +21,16 @@ final class IntentTests: XCTestCase {
     func testBlockTime() {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
+        let date = Date(timeIntervalSince1970: 5000)
         
-        let block = Block()
-        XCTAssert(block.formattedTime() == formatter.string(from: Date.now))
+        let block = Block(date: date)
+        XCTAssert(block.formattedTime() == formatter.string(from: date))
         
-        let block2 = Block(date: Date.now + 1000)
-        XCTAssert(block2.formattedTime() == formatter.string(from: Date.now + 1000))
+        let block2 = Block(date: date + 1000)
+        XCTAssert(block2.formattedTime() == formatter.string(from: date + 1000))
         
-        let block3 = Block(date: Date.now - 2000)
-        XCTAssert(block3.formattedTime() == formatter.string(from: Date.now - 2000))
+        let block3 = Block(date: date - 2000)
+        XCTAssert(block3.formattedTime() == formatter.string(from: date - 2000))
     }
     
     func testBlockBulletFiltering() {
@@ -41,9 +42,21 @@ final class IntentTests: XCTestCase {
         let bullet6 = Bullet("more text")
         
         let block = Block(bullets: [bullet6, bullet3, bullet2, bullet1, bullet4, bullet5])
+        
         block.filterBullets()
         XCTAssert(block.bullets == [bullet6, bullet3])
     }
     
-    
+    func testBlockEdit() {
+        let bullet1 = Bullet("bullet 1")
+        let bullet2 = Bullet("bullet 2")
+        let date = Date(timeIntervalSince1970: 1000)
+        let block = Block("original name", date: date, bullets: [bullet1, bullet2])
+        
+        let bullet3 = Bullet("bullet 3")
+        block.update(name: "edited name", date: date + 2000, bullets: [bullet1, bullet3])
+        XCTAssert(block.name == "edited name")
+        XCTAssert(block.date == date + 2000)
+        XCTAssert(block.bullets == [bullet1, bullet3])
+    }
 }

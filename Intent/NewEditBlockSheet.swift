@@ -17,7 +17,7 @@ struct NewEditBlockForm: View {
     init(day: Day, block: Block) {
         self.day = day
         self.block = block
-        self._transientBlock = StateObject(wrappedValue: Block(name: block.name, date: block.date, bullets: block.bullets))
+        self._transientBlock = StateObject(wrappedValue: Block(block.name, date: block.date, bullets: block.bullets))
     }
     
     var body: some View {

@@ -27,8 +27,8 @@ class Mock {
     static var bullet2 = Bullet("Pick up Jenn")
     static var bullet3 = Bullet("Check in with Ron")
     
-    static var block1 = Block(name: "John's birthday", date: Date.now)
-    static var block2 = Block(name: "Dinner with friends", date: Date.now + 1000)
-    static var block3 = Block(name: "Finish final project", date: Date.now + 5000, bullets: [bullet3])
-    static var block4 = Block(name: "Dinner plans", date: Date.now + 20000, bullets: [bullet1, bullet2])
+    static var block1 = Block("John's birthday", date: Date.now)
+    static var block2 = Block("Dinner with friends", date: Date.now + 1000)
+    static var block3 = Block("Finish final project", date: Date.now + 5000, bullets: [bullet3])
+    static var block4 = Block("Dinner plans", date: Date.now + 20000, bullets: [bullet1, bullet2])
 }

@@ -18,8 +18,9 @@ class Day: ObservableObject {
         self.date = date
     }
     
-    func addBlock(name: String, time: Date, bullets: [Bullet]) {
-        let block = Block(name: name, date: time, bullets: bullets)
+    func addBlock(name: String, date: Date, bullets: [Bullet]) {
+        let block = Block(name, date: date, bullets: bullets)
+        block.filterBullets()
         self.blocks.updateValue(block, forKey: block.id)
     }
     
@@ -44,10 +45,10 @@ struct DayView: View {
     var body: some View {
         ScrollView {
             VStack {
-//                ForEach(self.day.getSortedBlocks()) { block in
-//                    BlockView(block: block)
-//                }
-//                .padding(.horizontal)
+                ForEach(self.day.getSortedBlocks()) { block in
+                    BlockView(block: block)
+                }
+                .padding(.horizontal)
                 
                 CircleButton(systemName: "plus") {
                     self.day.newBlockSheetVisible = true
