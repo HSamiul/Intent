@@ -20,6 +20,8 @@ class Block: ObservableObject, Identifiable {
         self.bullets = bullets
         self.date = date
         self.editBlockSheetVisible = false
+        
+        polish()
     }
     
     /* return this block's time as a human-readable string */
@@ -36,10 +38,21 @@ class Block: ObservableObject, Identifiable {
         })
     }
     
+    func cleanupName() {
+        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    func polish() {
+        filterBullets()
+        cleanupName()
+    }
+    
     func update(name: String, date: Date, bullets: [Bullet]) {
         self.name = name
         self.date = date
         self.bullets = bullets
+        
+        polish()
     }
 }
 

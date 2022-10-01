@@ -20,7 +20,6 @@ class Day: ObservableObject {
     
     func addBlock(name: String, date: Date, bullets: [Bullet]) {
         let block = Block(name, date: date, bullets: bullets)
-        block.filterBullets()
         self.blocks.updateValue(block, forKey: block.id)
     }
     

@@ -10,35 +10,40 @@ import SwiftUI
 struct EditBlockSheet: View {
     @ObservedObject private var day: Day
     @ObservedObject private var block: Block
-    @StateObject private var transientBlock: Block
+    @State private var name: String
+    @State private var date: Date
+    @State private var bullets: [Bullet]
     @State private var showingAlert = false
     
     init(day: Day, block: Block) {
         self.day = day
         self.block = block
-        self._transientBlock = StateObject(wrappedValue: Block(block.name, date: block.date, bullets: block.bullets))
+        
+        self._name = State(wrappedValue: block.name)
+        self._date = State(wrappedValue: block.date)
+        self._bullets = State(wrappedValue: block.bullets)
     }
     
     var body: some View {
         NavigationView {
             Form {
                 Section("Details") {
-                    TextField("Block name", text: self.$transientBlock.name)
-                    DatePicker("Block time", selection: self.$transientBlock.date)
+                    TextField("Block name", text: $name)
+                    DatePicker("Block time", selection: $date)
                 }
                 
                 Section("Additional Details") {
-                    ForEach(self.$transientBlock.bullets) { bullet in
+                    ForEach($bullets) { bullet in
                         TextField("Bullet point", text: bullet.text)
                     }
                     
                     Button("Add bullet point") {
-                        self.transientBlock.bullets.append(Bullet(""))
+                        bullets.append(Bullet(""))
                     }
                 }
                 
                 Button("Delete") {
-                    self.day.blocks.removeValue(forKey: self.block.id)
+                    day.blocks.removeValue(forKey: block.id)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .foregroundColor(.red)
@@ -48,23 +53,17 @@ struct EditBlockSheet: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if (self.transientBlock.name.isBlank) {
-                            self.showingAlert = true
-                            return
+                        if (name.isBlank) {
+                            showingAlert = true
+                        } else {
+                            block.update(name: name, date: date, bullets: bullets)
+                            self.block.editBlockSheetVisible = false
                         }
-                        self.transientBlock.name = self.transientBlock.name.trimmingCharacters(in: .whitespacesAndNewlines)
-                        
-                        self.block.name = self.transientBlock.name
-                        self.block.date = self.transientBlock.date
-                        self.block.bullets = self.transientBlock.bullets.filter { bullet in
-                            !bullet.text.isBlank
-                        }
-                        self.block.editBlockSheetVisible = false
                     } label: {
                         Text("Done")
                             .fontWeight(.semibold)
                     }
-                    .alert("You must enter a name for the block.", isPresented: self.$showingAlert) {
+                    .alert("You must enter a name for the block.", isPresented: $showingAlert) {
                          
                     }
                 }

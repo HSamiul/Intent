@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct NewBlockSheet: View {
     @ObservedObject private var day: Day
     @State private var showingAlert = false
@@ -43,12 +45,10 @@ struct NewBlockSheet: View {
                     Button {
                         if (name.isBlank) {
                             showingAlert = true
-                            return
+                        } else {
+                            day.addBlock(name: name, date: date, bullets: bullets)
+                            day.newBlockSheetVisible = false
                         }
-                        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-
-                        day.addBlock(name: name, date: date, bullets: bullets)
-                        day.newBlockSheetVisible = false
                     } label: {
                         Text("Done")
                             .fontWeight(.semibold)
