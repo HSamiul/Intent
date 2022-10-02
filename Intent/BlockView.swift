@@ -32,10 +32,14 @@ class Block: ObservableObject, Identifiable {
     }
     
     /* modify this block's bullets to remove any that don't have text */
-    func filterBullets() {
+    func cleanUpBullets() {
         bullets = bullets.filter({ bullet in
             return !bullet.text.isBlank
         })
+        
+        for bullet in bullets {
+            bullet.text = bullet.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
     }
     
     func cleanupName() {
@@ -43,7 +47,7 @@ class Block: ObservableObject, Identifiable {
     }
     
     func polish() {
-        filterBullets()
+        cleanUpBullets()
         cleanupName()
     }
     

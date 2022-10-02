@@ -51,13 +51,8 @@ struct DayView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(self.day.sortedBlocks()) { block in
-                    BlockView(block: block)
-                }
-                .padding(.horizontal)
-                
+        LazyVStack {
+            if (day.blocks.isEmpty) {
                 CircleButton(systemName: "plus") {
                     self.day.newBlockSheetVisible = true
                 }
@@ -66,6 +61,25 @@ struct DayView: View {
                 if self.day.blocks.isEmpty {
                     Text("No blocks set for today.")
                         .foregroundColor(.gray)
+                }
+            } else {
+                ScrollView {
+                    VStack {
+                        ForEach(self.day.sortedBlocks()) { block in
+                            BlockView(block: block)
+                        }
+                        .padding(.horizontal)
+                        
+                        CircleButton(systemName: "plus") {
+                            self.day.newBlockSheetVisible = true
+                        }
+                        .padding()
+                        
+                        if self.day.blocks.isEmpty {
+                            Text("No blocks set for today.")
+                                .foregroundColor(.gray)
+                        }
+                    }
                 }
             }
         }
@@ -83,7 +97,7 @@ struct DayView_Previews: PreviewProvider {
         Mock.block2.id:Mock.block2, Mock.block4.id:Mock.block4,
         Mock.block1.id:Mock.block1, Mock.block3.id:Mock.block3
     ]
-    static var day = Day(blocks: blocks, date: Date.now)
+    static var day = Day(blocks: [:], date: Date.now)
 
     static var previews: some View {
         DayView(day: day)
