@@ -10,31 +10,25 @@
 
 import SwiftUI
 
-struct ChooseDateSheet: View {
+struct CalendarSheet: View {
     @ObservedObject private var home: Home
-    @State private var date = Date.now
+    @State private var date: Date
     
     init(home: Home) {
         self.home = home
+        self._date = State(wrappedValue: home.selectedDay)
     }
     
     var body: some View {
         NavigationView {
-            DatePicker("Test", selection: self.$date, displayedComponents: .date)
+            DatePicker("Test", selection: $date, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .padding(.horizontal)
                 .toolbar {
                     Button {
-                        if (!self.home.days.contains(where: { day in
-                            Calendar.current.isDate(day.date, equalTo: self.date, toGranularity: .day)
-                        })) {
-                            print("I happened")
-                            self.home.days.append(Day(blocks: [:], date: self.date))
-                            
-                        }
-                        print("bruddah")
-                        self.home.selectedDate = self.date
-                        self.home.chooseDaySheetVisible = false
+                        home.addDay(date: date)
+                        home.calendarSheetVisible = false
+                        home.selectedDay = date
                     } label: {
                         Text("Close")
                             .fontWeight(.semibold)
@@ -49,7 +43,7 @@ struct test_Previews: PreviewProvider {
     static var home = Home()
     
     static var previews: some View {
-        ChooseDateSheet(home: home)
+        CalendarSheet(home: home)
     }
 }
 

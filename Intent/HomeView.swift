@@ -9,16 +9,27 @@ import SwiftUI
 
 class Home: ObservableObject {
     @Published var days: [Day]
-    @Published var selectedDate: Date
-    @Published var chooseDaySheetVisible = false
+    @Published var selectedDay: Date
+    @Published var calendarSheetVisible = false
     
-    init(days: [Day] = [Day(blocks: [:], date: Date())], selectedDate: Date = Date.now) {
-        self.days = days
-        self.selectedDate = selectedDate
+    init() {
+        let date = Date()
+        
+        days = [Day(date: date)]
+        selectedDay = date
     }
     
     func getDayFrom(date: Date) {
             
+    }
+    
+    func addDay(date: Date) {
+        let dayAlreadyExists = days.contains { day in
+            Calendar.current.isDate(day.date, equalTo: date, toGranularity: .day)
+        }
+        
+        guard !dayAlreadyExists else { return }
+        days.append(Day(date: date))
     }
 }
 
@@ -28,29 +39,29 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             DayView(day: self.home.days.first(where: { day in
-                Calendar.current.isDate(day.date, equalTo: self.home.selectedDate, toGranularity: .day)
+                Calendar.current.isDate(day.date, equalTo: self.home.selectedDay, toGranularity: .day)
             })!)
-                .padding(.vertical)
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button {
-                        } label: {
-                            Image(systemName: "person.crop.circle")
-                        }
-                    }
-
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Button {
-                            self.home.chooseDaySheetVisible = true
-
-                        } label: {
-                            Image(systemName: "calendar")
-                        }
+//                .padding(.vertical)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button {
+                    } label: {
+                        Image(systemName: "person.crop.circle")
                     }
                 }
+
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button {
+                        self.home.calendarSheetVisible = true
+
+                    } label: {
+                        Image(systemName: "calendar")
+                    }
+                }
+            }
         }
-        .sheet(isPresented: self.$home.chooseDaySheetVisible) {
-            ChooseDateSheet(home: self.home)
+        .sheet(isPresented: self.$home.calendarSheetVisible) {
+            CalendarSheet(home: self.home)
                 .presentationDetents([.fraction(0.50)])
         }
     }

@@ -75,4 +75,21 @@ final class IntentTests: XCTestCase {
         
         XCTAssert(day.blocks.count == 1)
     }
+    
+    func testHomeAddDay() {
+        let today = Date()
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        
+        let home = Home()
+        XCTAssert(home.days.count == 1)
+        
+        home.addDay(date: today)
+        XCTAssert(home.days.count == 1)
+        
+        home.addDay(date: tomorrow)
+        XCTAssert(home.days.count == 2)
+        
+        home.addDay(date: tomorrow)
+        XCTAssert(home.days.count == 2)
+    }
 }
