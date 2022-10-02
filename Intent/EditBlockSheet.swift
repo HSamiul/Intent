@@ -10,6 +10,7 @@ import SwiftUI
 struct EditBlockSheet: View {
     @ObservedObject private var day: Day
     @ObservedObject private var block: Block
+    
     @State private var name: String
     @State private var date: Date
     @State private var bullets: [Bullet]
@@ -29,7 +30,7 @@ struct EditBlockSheet: View {
             Form {
                 Section("Details") {
                     TextField("Block name", text: $name)
-                    DatePicker("Block time", selection: $date)
+                    DatePicker("Block time", selection: $date, displayedComponents: .hourAndMinute)
                 }
                 
                 Section("Additional Details") {

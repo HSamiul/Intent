@@ -14,11 +14,12 @@ struct NewBlockSheet: View {
     @State private var showingAlert = false
     
     @State private var name: String = ""
-    @State private var date: Date = Date.now
+    @State private var date: Date
     @State private var bullets: [Bullet] = []
     
     init(day: Day) {
         self.day = day
+        self._date = State(wrappedValue: day.date)
     }
     
     var body: some View {
@@ -26,7 +27,7 @@ struct NewBlockSheet: View {
             Form {
                 Section("Details") {
                     TextField("Block name", text: $name)
-                    DatePicker("Block time", selection: $date)
+                    DatePicker("Block time", selection: $date, displayedComponents: .hourAndMinute)
                 }
                 
                 Section("Additional Details") {
@@ -46,7 +47,7 @@ struct NewBlockSheet: View {
                         if (name.isBlank) {
                             showingAlert = true
                         } else {
-                            day.addBlock(name: name, date: date, bullets: bullets)
+                            _ = day.addBlock(name: name, date: date, bullets: bullets)
                             day.newBlockSheetVisible = false
                         }
                     } label: {

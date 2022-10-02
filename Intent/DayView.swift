@@ -12,24 +12,33 @@ class Day: ObservableObject {
     @Published var newBlockSheetVisible: Bool
     let date: Date
     
-    init(blocks: Dictionary<UUID, Block>, date: Date) {
+    init(blocks: Dictionary<UUID, Block> = [:], date: Date) {
         self.blocks = blocks
         self.newBlockSheetVisible = false
         self.date = date
     }
     
-    func addBlock(name: String, date: Date, bullets: [Bullet]) {
-        let block = Block(name, date: date, bullets: bullets)
-        self.blocks.updateValue(block, forKey: block.id)
+    /* Attempts to add a block to day */
+    func addBlock(name: String, date: Date, bullets: [Bullet] = []) -> Bool {
+        if (Calendar.current.compare(self.date, to: date, toGranularity: .day) != .orderedSame) {
+            return false
+        } else {
+            let block = Block(name, date: date, bullets: bullets)
+            self.blocks.updateValue(block, forKey: block.id)
+            
+            return true
+        }
     }
     
-    func getSortedBlocks() -> [Block] {
+    func sortedBlocks() -> [Block] {
         let pairs = self.blocks.sorted { pair1, pair2 in
             pair1.value.date < pair2.value.date
         }
-        let blocks = pairs.map { pair in
+        
+        let blocks: [Block] = pairs.map { pair in
             return pair.value
         }
+        
         return blocks
     }
 }
@@ -44,7 +53,7 @@ struct DayView: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(self.day.getSortedBlocks()) { block in
+                ForEach(self.day.sortedBlocks()) { block in
                     BlockView(block: block)
                 }
                 .padding(.horizontal)

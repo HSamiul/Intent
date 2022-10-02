@@ -59,4 +59,18 @@ final class IntentTests: XCTestCase {
         XCTAssert(block.date == date + 2000)
         XCTAssert(block.bullets == [bullet1, bullet3])
     }
+    
+    func testDayAddBlock() {
+        let today = Date()
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
+        
+        let day = Day(date: tomorrow)
+        XCTAssert(day.blocks.isEmpty)
+        
+        XCTAssert(day.addBlock(name: "block1", date: Date() - 999999999, bullets: []) == false)
+        XCTAssert(day.addBlock(name: "block2", date: Date() + 999999999, bullets: []) == false)
+        XCTAssert(day.addBlock(name: "block3", date: Date() + 60 * 60 * 24, bullets: []) == true)
+        
+        XCTAssert(day.blocks.count == 1)
+    }
 }
