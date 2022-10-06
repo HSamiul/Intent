@@ -27,10 +27,10 @@ struct CalendarSheet: View {
                 .toolbar {
                     Button {
                         home.addDay(date: date)
-                        home.calendarSheetVisible = false
                         home.selectedDay = date
+                        home.calendarSheetVisible = false
                     } label: {
-                        Text("Close")
+                        Text("Done")
                             .fontWeight(.semibold)
                     }
                 }
@@ -39,7 +39,7 @@ struct CalendarSheet: View {
     }
 }
 
-struct test_Previews: PreviewProvider {
+struct CalendarSheet_Previews: PreviewProvider {
     static var home = Home()
     
     static var previews: some View {

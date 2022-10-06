@@ -8,28 +8,43 @@
 import SwiftUI
 
 class Home: ObservableObject {
-    @Published var days: [Day]
+    @Published var days: Dictionary<Date, Day>
     @Published var selectedDay: Date
     @Published var calendarSheetVisible = false
     
     init() {
         let date = Date()
         
-        days = [Day(date: date)]
+        days = [date:Day(date: date)]
         selectedDay = date
     }
     
-    func getDayFrom(date: Date) {
-            
-    }
-    
-    func addDay(date: Date) {
-        let dayAlreadyExists = days.contains { day in
-            Calendar.current.isDate(day.date, equalTo: date, toGranularity: .day)
+    func getDayFrom(date: Date) -> Day {
+        for key in days.keys {
+            let cmp = Calendar.current.compare(date, to: key, toGranularity: .day)
+            if (cmp == .orderedSame) {
+                return days[key]!
+            }
         }
         
-        guard !dayAlreadyExists else { return }
-        days.append(Day(date: date))
+        print("I SHOULD NEVER HAPPEN")
+        return Day(date: Date.now)
+    }
+    
+    func addDay(date: Date) -> Void {
+        guard !dayExists(date: date) else { print("already exists"); return }
+        print("adding")
+        days.updateValue(Day(date: date), forKey: date)
+    }
+    
+    func dayExists(date: Date) -> Bool {
+        for key in days.keys {
+            let cmp = Calendar.current.compare(date, to: key, toGranularity: .day)
+            if (cmp == .orderedSame) {
+                return true
+            }
+        }
+        return false
     }
 }
 
@@ -38,9 +53,7 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            DayView(day: self.home.days.first(where: { day in
-                Calendar.current.isDate(day.date, equalTo: self.home.selectedDay, toGranularity: .day)
-            })!)
+            DayView(day: home.getDayFrom(date: home.selectedDay))
 //                .padding(.vertical)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
